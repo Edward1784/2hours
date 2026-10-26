@@ -3,150 +3,316 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>2Hours: your feeds sleep in, you don't</title>
-  <meta name="description" content="2Hours locks Instagram, TikTok and the rest for the first two hours after you wake up. Walk 300 steps or scan a barcode to wake them early. For iPhone." />
-  <meta name="theme-color" content="#F4F3F0" />
+  <title>2Hours · Your feeds sleep in. You don't.</title>
+  <meta name="description" content="2Hours locks Instagram, TikTok and YouTube for the first two hours after you wake up. Walk 300 steps or scan a barcode to wake them early. For iPhone." />
+  <meta name="theme-color" content="#F6F4F0" />
   <link rel="icon" href="/assets/icon.png" />
   <link rel="apple-touch-icon" href="/assets/icon.png" />
-  <meta property="og:title" content="2Hours: your feeds sleep in, you don't" />
-  <meta property="og:description" content="The first two hours of your day, back. Social apps sleep until you're actually up." />
-  <meta property="og:image" content="/assets/sunny-awake.png" />
+  <meta property="og:title" content="2Hours · Your feeds sleep in. You don't." />
+  <meta property="og:description" content="Win back the first two hours of your day. Social apps sleep until you're actually up." />
+  <meta property="og:image" content="https://2hours-app.vercel.app/assets/sunny-awake.png" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
-  <header class="top">
+  <!-- UI icons (Lucide-style strokes, drawn for 2Hours) -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2.5" /><path d="M8 11V8a4 4 0 0 1 8 0v3" /></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" /></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" /></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z" /></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></symbol>
+    <symbol id="i-steps" viewBox="0 0 24 24"><path d="M6 15.5c-1.4-.3-2.3-1.9-2-3.6l.6-3.5C5 6.6 6.5 5.4 7.8 5.7c1.3.3 2 2 1.6 3.8l-.8 3.6c-.4 1.7-1.3 2.7-2.6 2.4Z" /><path d="M5 19.5l3.2.7" /><path d="M18 11.5c1.4-.3 2.3-1.9 2-3.6l-.6-3.5C19 2.6 17.5 1.4 16.2 1.7c-1.3.3-2 2-1.6 3.8l.8 3.6c.4 1.7 1.3 2.7 2.6 2.4Z" /><path d="M19 15.5l-3.2.7" /></symbol>
+    <symbol id="i-barcode" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 8v8M10 8v8M13 8v8M17 8v8" /></symbol>
+    <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" /><path d="m15.5 8.5-2 5-5 2 2-5 5-2Z" /></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5.5c0 4.3 2.9 7.7 7 9.5 4.1-1.8 7-5.2 7-9.5V6l-7-3Z" /><path d="m9 12 2.2 2.2L15.5 10" /></symbol>
+    <symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" /><path d="M5.3 5.3l13.4 13.4" /></symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 22c4 0 7-2.7 7-6.6 0-3.1-1.8-5.3-3.6-7.2-.3 1.9-1.3 3-2.4 3.4.4-3.2-.8-6.3-3.5-8.6-.1 3.2-1.4 5-3.1 6.9C5.3 11.3 5 13 5 15.4 5 19.3 8 22 12 22Z" /></symbol>
+    <symbol id="i-widget" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" /><path d="M7 15h5M7 11h10" /></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8h3l1.5-2.5h7L17 8h3v11H4z" /><circle cx="12" cy="13.2" r="3.4" /></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="m9 4-5 2v14l5-2 6 2 5-2V4l-5 2-6-2ZM9 4v14M15 6v14" /></symbol>
+    <symbol id="i-notes" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2.5" /><path d="M8.5 8h7M8.5 12h7M8.5 16h4" /></symbol>
+    <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18.5a4.5 4.5 0 1 1 .9-8.9A6 6 0 0 1 19.4 12 3.3 3.3 0 0 1 18 18.5H7Z" /></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3" /><path d="M3.5 10h17M8 3v4M16 3v4" /></symbol>
+    <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5l11-2v13" /><circle cx="6.5" cy="18" r="2.5" /><circle cx="17.5" cy="16" r="2.5" /></symbol>
+    <symbol id="i-alarm" viewBox="0 0 24 24"><circle cx="12" cy="13" r="7.5" /><path d="M12 9.5V13l2.3 1.6M4.5 4.5 7 2.5M19.5 4.5 17 2.5" /></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M7.5 3.5 5 4.2C4 4.5 3.4 5.6 3.7 6.6 5.6 13 11 18.4 17.4 20.3c1 .3 2.1-.3 2.4-1.3l.7-2.5-4-2-1.8 1.8c-2.4-1.1-4.3-3-5.5-5.5L11 9l-2-4-1.5-1.5Z" /></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M12 4c5 0 9 3.3 9 7.4s-4 7.4-9 7.4c-1 0-2-.1-2.9-.4L4.5 20l1.2-3.8C4 14.9 3 13.2 3 11.4 3 7.3 7 4 12 4Z" /></symbol>
+    <symbol id="i-safari" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" /><path d="m16 8-5.3 2.7L8 16l5.3-2.7L16 8Z" /></symbol>
+  </svg>
+
+  <header class="top" id="top">
     <div class="wrap">
       <a class="brand" href="/"><img src="/assets/icon.png" alt="" />2Hours</a>
       <nav>
-        <a href="#how">How it works</a>
-        <a href="#faq">FAQ</a>
-        <a class="btn light" href="#download">Get the app</a>
+        <a class="txt" href="#how">How it works</a>
+        <a class="txt" href="#features">Features</a>
+        <a class="txt" href="#pricing">Pricing</a>
+        <a class="badge-link" href="#get" aria-label="Download on the App Store, coming soon"><img src="/assets/appstore-badge.svg" alt="Download on the App Store" /></a>
       </nav>
     </div>
   </header>
 
   <main>
+    <!-- HERO -->
     <div class="hero">
-      <div class="wheel left" aria-hidden="true"><div class="nums">05<br />06<br /><b>07</b>08<br />09</div></div>
-      <div class="wheel right" aria-hidden="true"><div class="nums">50<br />55<br /><b>00</b>05<br />10</div></div>
       <div class="wrap">
-        <div class="sun-stage">
-          <div class="zzz" aria-hidden="true"><span>z</span><span>z</span><span>z</span></div>
-          <img src="/assets/sunny-asleep.svg" alt="Sunny, the 2Hours mascot, asleep" width="708" height="440" />
+        <div>
+          <span class="pill reveal"><img src="/assets/icon.png" alt="" />For iPhone · Coming soon</span>
+          <h1 class="reveal" style="--d:60ms"><span style="white-space:nowrap">Your feeds</span> <span style="white-space:nowrap">sleep in.</span><br /><span class="soft">You don't.</span></h1>
+          <p class="lead reveal" style="--d:120ms">2Hours locks Instagram, TikTok and YouTube the moment you wake up. Walk 300 steps or scan a barcode, and they wake up too.</p>
+          <div class="cta-row reveal" style="--d:180ms" id="get">
+            <a class="badge-link" href="#get" aria-label="Download on the App Store, coming soon"><img src="/assets/appstore-badge.svg" alt="Download on the App Store" /></a>
+            <span class="cta-note">Launching soon on the App Store</span>
+          </div>
+          <ul class="checks reveal" style="--d:240ms">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check" /></svg>Free to start</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check" /></svg>No account</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check" /></svg>Built on Apple Screen Time</li>
+          </ul>
         </div>
-        <h1>Your feeds sleep in. You don't.</h1>
-        <p class="lead">2Hours locks Instagram, TikTok and the rest for the first two hours after you wake up. Walk or scan a barcode to wake them early.</p>
-        <div class="ctas" id="download">
-          <a class="btn" href="#download" aria-disabled="true">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.37 12.65c-.02-2.2 1.8-3.26 1.88-3.31-1.03-1.5-2.62-1.7-3.18-1.73-1.35-.14-2.64.8-3.33.8-.69 0-1.75-.78-2.88-.76-1.48.02-2.85.86-3.61 2.19-1.54 2.67-.39 6.62 1.11 8.79.73 1.06 1.6 2.25 2.75 2.21 1.1-.04 1.52-.71 2.85-.71 1.33 0 1.71.71 2.88.69 1.19-.02 1.94-1.08 2.66-2.15.84-1.23 1.19-2.42 1.21-2.48-.03-.01-2.32-.89-2.34-3.54ZM14.2 6.17c.61-.74 1.02-1.76.91-2.78-.88.04-1.94.59-2.57 1.32-.56.65-1.06 1.69-.93 2.69.98.08 1.98-.5 2.59-1.23Z" /></svg>
-            Coming soon on the App Store
-          </a>
+
+        <div class="stage reveal" style="--d:120ms">
+          <div class="float a"><div class="firetile"><img src="/assets/sunny-fire.svg" alt="" /></div><div>12-day streak<small>Sunny's on fire</small></div></div>
+          <div class="float b"><div class="okdot"><svg viewBox="0 0 24 24"><use href="#i-check" /></svg></div><div>+1h 48m back<small>Unlocked at 7:12</small></div></div>
+
+          <div class="iphone"><div class="screen phone" id="phone">
+            <div class="island"></div>
+            <div class="status">
+              <span class="clock"><span>6:59</span><span>7:00</span></span>
+              <span class="sys">
+                <svg viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1" /><rect x="5" y="5.5" width="3" height="6.5" rx="1" /><rect x="10" y="3" width="3" height="9" rx="1" /><rect x="15" y="0" width="3" height="12" rx="1" /></svg>
+                <svg viewBox="0 0 26 12" fill="currentColor"><rect x="0.5" y="0.5" width="22" height="11" rx="3.5" fill="none" stroke="currentColor" opacity=".4" /><rect x="2.5" y="2.5" width="16" height="7" rx="2" /><rect x="23.5" y="4" width="1.6" height="4" rx=".8" opacity=".4" /></svg>
+              </span>
+            </div>
+
+            <div class="banner" id="b1"><img src="/assets/icon.png" alt="" /><div><b>2Hours · Feeds asleep</b><span>Back at 9:00. Get up to wake them early.</span></div></div>
+            <div class="banner" id="b2"><img src="/assets/icon.png" alt="" /><div><b>Unlocked early</b><span>Morning won. +1h 48m back.</span></div></div>
+
+            <div class="widget"><div class="wt"><small>Next lock</small><b>7:00 AM</b><em>2 quiet hours</em></div><img class="wsun" src="/assets/sunny-awake.svg" alt="" /></div>
+
+            <div class="grid">
+              <div class="app soc b-ig" style="--d:0ms"><svg viewBox="0 0 24 24"><use href="/assets/brands.svg#ig" /></svg><span class="lk"><svg viewBox="0 0 24 24"><use href="#i-lock" /></svg></span></div>
+              <div class="app b-n1 ui"><svg viewBox="0 0 24 24"><use href="#i-camera" /></svg></div>
+              <div class="app soc b-tt" style="--d:90ms"><svg viewBox="0 0 24 24"><use href="/assets/brands.svg#tt" /></svg><span class="lk"><svg viewBox="0 0 24 24"><use href="#i-lock" /></svg></span></div>
+              <div class="app b-n2 ui"><svg viewBox="0 0 24 24"><use href="#i-map" /></svg></div>
+              <div class="app b-n3 ui"><svg viewBox="0 0 24 24"><use href="#i-notes" /></svg></div>
+              <div class="app soc b-yt" style="--d:180ms"><svg viewBox="0 0 24 24"><use href="/assets/brands.svg#yt" /></svg><span class="lk"><svg viewBox="0 0 24 24"><use href="#i-lock" /></svg></span></div>
+              <div class="app b-n4 ui"><svg viewBox="0 0 24 24"><use href="#i-cloud" /></svg></div>
+              <div class="app soc b-sc" style="--d:270ms"><svg viewBox="0 0 24 24"><use href="/assets/brands.svg#sc" /></svg><span class="lk"><svg viewBox="0 0 24 24"><use href="#i-lock" /></svg></span></div>
+              <div class="app soc b-x" style="--d:360ms"><svg viewBox="0 0 24 24"><use href="/assets/brands.svg#x" /></svg><span class="lk"><svg viewBox="0 0 24 24"><use href="#i-lock" /></svg></span></div>
+              <div class="app b-n5 ui"><svg viewBox="0 0 24 24"><use href="#i-cal" /></svg></div>
+              <div class="app b-n7 ui"><svg viewBox="0 0 24 24"><use href="#i-alarm" /></svg></div>
+              <div class="app soc b-rd" style="--d:450ms"><svg viewBox="0 0 24 24"><use href="/assets/brands.svg#rd" /></svg><span class="lk"><svg viewBox="0 0 24 24"><use href="#i-lock" /></svg></span></div>
+            </div>
+            <div class="tap" id="tap"></div>
+
+            <div class="dock">
+              <div class="app b-n2 ui"><svg viewBox="0 0 24 24"><use href="#i-phone" /></svg></div>
+              <div class="app b-n2 ui"><svg viewBox="0 0 24 24"><use href="#i-chat" /></svg></div>
+              <div class="app b-n4 ui"><svg viewBox="0 0 24 24"><use href="#i-safari" /></svg></div>
+              <div class="app b-n6 ui"><svg viewBox="0 0 24 24"><use href="#i-music" /></svg></div>
+            </div>
+
+            <div class="shield" id="shield">
+              <div class="sky"><div class="faces"><img class="on" src="/assets/sunny-asleep.svg" alt="" /><img src="/assets/sunny-awake.svg" alt="" /><img src="/assets/sunny-happy.svg" alt="" /></div></div>
+              <h4><i class="b-ig"><svg viewBox="0 0 24 24"><use href="/assets/brands.svg#ig" /></svg></i>Instagram is asleep</h4>
+              <p>Walk 300 steps to wake it early</p>
+              <div class="ring">
+                <svg viewBox="0 0 134 134"><circle class="track" cx="67" cy="67" r="56" /><circle class="bar" id="bar" cx="67" cy="67" r="56" stroke-dasharray="352" stroke-dashoffset="352" /></svg>
+                <div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><use href="#i-steps" /></svg><span id="steps">0</span><small>of 300 steps</small></div>
+                <div class="done"><svg viewBox="0 0 24 24"><use href="#i-check" /></svg></div>
+              </div>
+              <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><use href="#i-barcode" /></svg>or scan your code</span>
+            </div>
+          </div></div>
         </div>
-        <span class="soon">For iPhone. Free to download, with an optional Pro subscription.</span>
       </div>
     </div>
 
+    <!-- LOGOS -->
+    <div class="logos">
+      <div class="wrap">
+        <p class="reveal">Puts these to sleep every morning</p>
+        <div class="row-icons">
+          <span class="ico b-ig reveal" style="--d:0ms"><svg viewBox="0 0 24 24"><use href="/assets/brands.svg#ig" /></svg></span>
+          <span class="ico b-tt reveal" style="--d:40ms"><svg viewBox="0 0 24 24"><use href="/assets/brands.svg#tt" /></svg></span>
+          <span class="ico b-yt reveal" style="--d:80ms"><svg viewBox="0 0 24 24"><use href="/assets/brands.svg#yt" /></svg></span>
+          <span class="ico b-sc reveal" style="--d:120ms"><svg viewBox="0 0 24 24"><use href="/assets/brands.svg#sc" /></svg></span>
+          <span class="ico b-x reveal" style="--d:160ms"><svg viewBox="0 0 24 24"><use href="/assets/brands.svg#x" /></svg></span>
+          <span class="ico b-fb reveal" style="--d:200ms"><svg viewBox="0 0 24 24"><use href="/assets/brands.svg#fb" /></svg></span>
+          <span class="ico b-rd reveal" style="--d:240ms"><svg viewBox="0 0 24 24"><use href="/assets/brands.svg#rd" /></svg></span>
+          <span class="ico b-th reveal" style="--d:280ms"><svg viewBox="0 0 24 24"><use href="/assets/brands.svg#th" /></svg></span>
+          <span class="ico plus reveal" style="--d:320ms">+ any app</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOW -->
     <section id="how">
+      <div class="wrap center">
+        <div class="eyebrow reveal">How it works</div>
+        <h2 class="reveal" style="--d:60ms">Three steps to a better morning</h2>
+        <p class="sub reveal" style="--d:120ms">The scroll that starts in bed eats the best hours of your day. 2Hours puts it to sleep until you're really up.</p>
+      </div>
       <div class="wrap">
-        <div class="eyebrow">How it works</div>
-        <h2>Two calm hours, every morning</h2>
-        <p class="sub">The scroll that starts in bed eats the best hours of your day. 2Hours puts it to sleep until you're really up.</p>
-        <div class="steps">
-          <div class="step">
-            <div class="n">1</div>
-            <h3>Pick your traps</h3>
-            <p>Choose the apps that pull you in with Apple's own Screen Time picker. 2Hours never sees which apps they are.</p>
-            <div class="art">
-              <div class="icons">
-                <div class="ic" style="background:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf)"></div>
-                <div class="ic" style="background:#111"></div>
-                <div class="ic" style="background:#fff;border:1px solid #e3e0db"></div>
-                <div class="ic" style="background:#fffc00"></div>
-              </div>
+        <div class="how">
+          <article class="card reveal">
+            <div class="txt"><span class="n">1</span><h3>Pick your traps</h3><p>Choose the apps that pull you in with Apple's own Screen Time picker. 2Hours never sees which apps they are.</p></div>
+            <div class="vis"><div class="mini">
+              <div class="ttl">Choose Apps</div>
+              <div class="li"><span class="ico b-ig"><svg viewBox="0 0 24 24"><use href="/assets/brands.svg#ig" /></svg></span>Instagram<span class="ck"><svg viewBox="0 0 24 24"><use href="#i-check" /></svg></span></div>
+              <div class="li"><span class="ico b-tt"><svg viewBox="0 0 24 24"><use href="/assets/brands.svg#tt" /></svg></span>TikTok<span class="ck"><svg viewBox="0 0 24 24"><use href="#i-check" /></svg></span></div>
+              <div class="li"><span class="ico b-yt" style="box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)"><svg viewBox="0 0 24 24"><use href="/assets/brands.svg#yt" /></svg></span>YouTube<span class="ck"><svg viewBox="0 0 24 24"><use href="#i-check" /></svg></span></div>
+              <div class="li"><span class="ico b-n4 ui"><svg viewBox="0 0 24 24"><use href="#i-cloud" /></svg></span>Weather<span class="ck off"></span></div>
+            </div></div>
+          </article>
+          <article class="card reveal" style="--d:80ms">
+            <div class="txt"><span class="n">2</span><h3>They sleep when you wake</h3><p>At your wake time they lock for two hours. Open one and you meet Sunny, not the feed. Works even when 2Hours is closed.</p></div>
+            <div class="vis"><div class="mini sh">
+              <div class="sky"><img src="/assets/sunny-asleep.svg" alt="" /></div>
+              <b>Still asleep</b><span>Get up to unlock early: walk or scan your code.</span>
+            </div></div>
+          </article>
+          <article class="card reveal" style="--d:160ms">
+            <div class="txt"><span class="n">3</span><h3>Get up to wake them</h3><p>Brush your teeth, make coffee: that's about 300 steps. Or scan a barcode you keep in the bathroom. The lock lifts on its own.</p></div>
+            <div class="vis"><div class="mini st">
+              <div class="ttl">Walk it off</div>
+              <div class="ring"><svg viewBox="0 0 134 134"><circle class="track" cx="67" cy="67" r="56" /><circle class="bar" cx="67" cy="67" r="56" stroke-dasharray="352" stroke-dashoffset="96" /></svg><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><use href="#i-steps" /></svg>218<small>of 300 steps</small></div></div>
+            </div></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features" style="padding-top:20px">
+      <div class="wrap center">
+        <div class="eyebrow reveal">Features</div>
+        <h2 class="reveal" style="--d:60ms">Small app. Big mornings.</h2>
+      </div>
+      <div class="wrap">
+        <div class="bento">
+          <div class="tile morning w2 reveal">
+            <span class="tag"><svg viewBox="0 0 24 24"><use href="#i-sun" /></svg>Morning lock</span>
+            <div class="bigtime">7:00<small>AM → 9:00</small></div>
+            <div class="days"><span class="on">M</span><span class="on">T</span><span class="on">W</span><span class="on">T</span><span class="on">F</span><span>S</span><span>S</span></div>
+            <h3>Two hours from your wake time</h3>
+            <p>Pick your days. Calls, messages, maps and music keep working. Only your traps sleep.</p>
+            <img class="sunny" src="/assets/sunny-awake.svg" alt="" />
+          </div>
+          <div class="tile night reveal" style="--d:80ms">
+            <div class="stars"><i style="left:16%;top:30%"></i><i style="left:72%;top:18%;animation-delay:-1s"></i><i style="left:84%;top:44%;animation-delay:-2s"></i><i style="left:38%;top:14%;animation-delay:-.5s"></i><i style="left:58%;top:36%;animation-delay:-1.6s"></i></div>
+            <span class="tag"><svg viewBox="0 0 24 24"><use href="#i-moon" /></svg>Bedtime lock</span>
+            <h3>Lights out, feeds out</h3>
+            <p>Lock them at night too, so the morning starts before you pick up the phone.</p>
+            <span class="zz">z</span>
+            <img class="sunny" src="/assets/sunny-asleep.svg" alt="" />
+          </div>
+          <div class="tile reveal">
+            <span class="tag pro"><svg viewBox="0 0 24 24"><use href="#i-compass" /></svg>Pro</span>
+            <h3>Safari covered too</h3>
+            <p>No sneaking onto instagram.com while the lock is on.</p>
+            <div class="safari">
+              <div class="bar"><svg viewBox="0 0 24 24"><use href="#i-lock" /></svg>instagram.com</div>
+              <div class="blocked"><svg viewBox="0 0 24 24"><use href="#i-ban" /></svg><b>Restricted</b><span>Back at 9:00</span></div>
             </div>
           </div>
-          <div class="step">
-            <div class="n">2</div>
-            <h3>They sleep when you wake</h3>
-            <p>At your wake time the apps lock for two hours. Open one and you meet Sunny instead of the feed. It works even when 2Hours is closed.</p>
-            <div class="art">
-              <div class="icons">
-                <div class="ic locked" style="background:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf)"></div>
-                <div class="ic locked" style="background:#111"></div>
-                <div class="ic locked" style="background:#fff;border:1px solid #e3e0db"></div>
-                <div class="ic locked" style="background:#fffc00"></div>
+          <div class="tile streak w2 reveal" style="--d:80ms">
+            <div>
+              <span class="tag"><svg viewBox="0 0 24 24"><use href="#i-flame" /></svg>Streaks</span>
+              <h3>Keep Sunny's fire alive</h3>
+              <p>Every morning you beat the lock lights Sunny up. Miss one and the fire goes out.</p>
+              <div class="week">
+                <span><img src="/assets/sunny-fire.svg" alt="" /></span><span><img src="/assets/sunny-fire.svg" alt="" /></span><span><img src="/assets/sunny-fire.svg" alt="" /></span><span class="miss"></span><span><img src="/assets/sunny-fire.svg" alt="" /></span><span><img src="/assets/sunny-fire.svg" alt="" /></span><span class="miss"></span>
               </div>
             </div>
+            <div class="firebox"><img src="/assets/sunny-fire.svg" alt="Sunny with a crown of fire" /></div>
           </div>
-          <div class="step">
-            <div class="n">3</div>
-            <h3>Get up to wake them</h3>
-            <p>Walk 300 steps (brush your teeth, make coffee) or scan a barcode you registered in your bathroom. The lock lifts on its own.</p>
-            <div class="art">
-              <div class="walk">
-                <div class="ring"><div>218<small>of 300 steps</small></div></div>
-              </div>
-            </div>
+          <div class="tile reveal">
+            <span class="tag"><svg viewBox="0 0 24 24"><use href="#i-widget" /></svg>Widgets</span>
+            <h3>See it coming</h3>
+            <p>Home and Lock Screen widgets show your next lock.</p>
+            <div class="widgetmock"><small>Next lock</small><b>7:00</b><img src="/assets/sunny-awake.svg" alt="" /></div>
+          </div>
+          <div class="tile privacy w2 reveal" style="--d:80ms">
+            <span class="tag"><svg viewBox="0 0 24 24"><use href="#i-shield" /></svg>Private by design</span>
+            <h3>Your mornings stay yours</h3>
+            <ul>
+              <li><svg viewBox="0 0 24 24"><use href="#i-check" /></svg>App choices are opaque Screen Time tokens from Apple. We can't see them.</li>
+              <li><svg viewBox="0 0 24 24"><use href="#i-check" /></svg>Steps are read on your iPhone only to unlock, and never leave it.</li>
+              <li><svg viewBox="0 0 24 24"><use href="#i-check" /></svg>No account, no ads, no data sold. Anonymous usage stats can be switched off.</li>
+            </ul>
+            <img class="sunny" src="/assets/sunny-happy.svg" alt="" />
           </div>
         </div>
       </div>
     </section>
 
-    <section>
+    <!-- PRICING -->
+    <section id="pricing" style="padding-top:20px">
+      <div class="wrap center">
+        <div class="eyebrow reveal">Pricing</div>
+        <h2 class="reveal" style="--d:60ms">Free to start. Pro when you're hooked.</h2>
+      </div>
       <div class="wrap">
-        <div class="eyebrow">Made for real mornings</div>
-        <h2>Everything stays simple</h2>
-        <div class="features">
-          <div class="feature"><div class="em">🌅</div><div><h3>Morning lock</h3><p>Two hours from your wake time, on the days you choose. Free.</p></div></div>
-          <div class="feature"><div class="em">🌙</div><div><h3>Bedtime lock</h3><p>Feeds go to sleep at night too, so the morning starts before you pick up the phone.</p></div></div>
-          <div class="feature"><div class="em">🚶</div><div><h3>Walk or scan to unlock</h3><p>Steps are counted by your iPhone's motion chip. Scan-to-unlock uses any barcode you choose.</p></div></div>
-          <div class="feature"><div class="em">🧭</div><div><h3>Safari covered too</h3><p>With Pro, social sites are blocked in Safari and in-app browsers while the lock is on.</p></div></div>
+        <div class="plans">
+          <div class="plan reveal">
+            <h3>Free</h3>
+            <div class="price">$0</div>
+            <p class="note">No account needed.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24"><use href="#i-check" /></svg>Lock 3 apps<span class="ics"><i class="b-ig"><svg viewBox="0 0 24 24"><use href="/assets/brands.svg#ig" /></svg></i><i class="b-tt"><svg viewBox="0 0 24 24"><use href="/assets/brands.svg#tt" /></svg></i><i class="b-yt" style="box-shadow:inset 0 0 0 1px rgba(0,0,0,.1)"><svg viewBox="0 0 24 24"><use href="/assets/brands.svg#yt" /></svg></i></span></li>
+              <li><svg viewBox="0 0 24 24"><use href="#i-check" /></svg>Morning and bedtime locks</li>
+              <li><svg viewBox="0 0 24 24"><use href="#i-check" /></svg>Walk 300 steps to unlock</li>
+              <li><svg viewBox="0 0 24 24"><use href="#i-check" /></svg>Streaks, stats and widgets</li>
+            </ul>
+          </div>
+          <div class="plan pro reveal" style="--d:80ms">
+            <div class="glow"></div>
+            <h3>2Hours Pro <span class="probadge">PRO</span></h3>
+            <div class="price">Free trial</div>
+            <p class="note">Then yearly or weekly. Price shown in the app; cancel anytime.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24"><use href="#i-check" /></svg>Lock any app you choose</li>
+              <li><svg viewBox="0 0 24 24"><use href="#i-check" /></svg>Scan a barcode to unlock</li>
+              <li><svg viewBox="0 0 24 24"><use href="#i-check" /></svg>Social sites blocked in Safari</li>
+              <li><svg viewBox="0 0 24 24"><use href="#i-check" /></svg>Bigger step goals: 500 or 1,000</li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
 
-    <section>
-      <div class="wrap streak">
-        <div class="fire-card"><img src="/assets/sunny-fire.svg" alt="Sunny with a crown of fire, the 2Hours streak buddy" width="756" height="790" /></div>
-        <div>
-          <div class="eyebrow">Streaks</div>
-          <h2>Keep Sunny's fire alive</h2>
-          <p class="sub">Every morning you beat the lock lights Sunny up. Miss one and the fire goes out. Simple, a little silly, and it works.</p>
-        </div>
+    <!-- FAQ -->
+    <section id="faq" style="padding-top:20px">
+      <div class="wrap center">
+        <div class="eyebrow reveal">Questions</div>
+        <h2 class="reveal" style="--d:60ms">Good to know</h2>
       </div>
-    </section>
-
-    <section class="privacy-band">
-      <div class="narrow">
-        <div class="sky-tile"><img src="/assets/sunny-happy.svg" alt="" width="708" height="440" /></div>
-        <h3>Private by design</h3>
-        <p>Your app choices are opaque Screen Time tokens from Apple, your steps are read on your iPhone, and your scan code never leaves it. No account, no ads, no data sold. <a href="/privacy">Read the privacy policy</a>.</p>
-      </div>
-    </section>
-
-    <section id="faq">
       <div class="wrap">
-        <div class="eyebrow">Questions</div>
-        <h2>Good to know</h2>
         <div class="faq">
-          <details><summary>Is 2Hours free?</summary><p>Yes. The morning lock, the bedtime lock and walking to unlock are free. 2Hours Pro is an optional subscription that adds unlimited apps, scan-to-unlock, Safari blocking and bigger step goals. It starts with a free trial; the price is shown in the app before you subscribe, and you can cancel anytime in Settings › Apple ID › Subscriptions.</p></details>
-          <details><summary>Can I still use my phone during the lock?</summary><p>Of course. Calls, messages, maps, music and every app you didn't pick work as usual. Only the apps you chose sleep.</p></details>
-          <details><summary>What if I really need an app?</summary><p>Get up and walk 300 steps, or scan your code. That's the point: a small action that wakes you up. The lock also ends on its own after two hours.</p></details>
-          <details><summary>Does it work when 2Hours is closed?</summary><p>Yes. 2Hours uses Apple's Screen Time framework, so iOS applies and removes the lock on schedule even if the app isn't running.</p></details>
-          <details><summary>Which devices are supported?</summary><p>iPhone with iOS 16.4 or later. Screen Time permission is required to lock apps.</p></details>
+          <details class="reveal"><summary>Can I still use my phone during the lock?<svg viewBox="0 0 24 24"><use href="#i-plus" /></svg></summary><div class="ans"><p>Of course. Calls, messages, maps, music and every app you didn't pick work as usual. Only the apps you chose sleep.</p></div></details>
+          <details class="reveal"><summary>What if I really need an app?<svg viewBox="0 0 24 24"><use href="#i-plus" /></svg></summary><div class="ans"><p>Get up and walk 300 steps, or scan your code. That's the point: a small action that wakes you up. The lock also ends on its own after two hours.</p></div></details>
+          <details class="reveal"><summary>Does it work when 2Hours is closed?<svg viewBox="0 0 24 24"><use href="#i-plus" /></svg></summary><div class="ans"><p>Yes. 2Hours uses Apple's Screen Time framework, so iOS applies and removes the lock on schedule even when the app isn't running.</p></div></details>
+          <details class="reveal"><summary>Why does it need Screen Time and Motion access?<svg viewBox="0 0 24 24"><use href="#i-plus" /></svg></summary><div class="ans"><p>Screen Time lets iOS lock the apps you pick. Motion &amp; Fitness counts your steps for the walk-to-unlock. Both stay on your iPhone. Details in the <a href="/privacy">Privacy Policy</a>.</p></div></details>
+          <details class="reveal"><summary>Which iPhones are supported?<svg viewBox="0 0 24 24"><use href="#i-plus" /></svg></summary><div class="ans"><p>Any iPhone on iOS 16.4 or later.</p></div></details>
         </div>
       </div>
     </section>
 
+    <!-- FINAL -->
     <section class="final">
       <div class="wrap">
-        <div class="card">
+        <div class="card reveal">
+          <div class="rays"></div>
           <h2>Win the first two hours</h2>
           <p class="sub">The rest of the day follows.</p>
-          <img src="/assets/sunny-awake.svg" alt="" width="708" height="440" />
+          <a class="badge-link" href="#get" aria-label="Download on the App Store, coming soon"><img src="/assets/appstore-badge.svg" alt="Download on the App Store" /></a>
+          <img class="sunny" src="/assets/sunny-happy.svg" alt="Sunny, the 2Hours mascot" />
         </div>
       </div>
     </section>
@@ -154,10 +320,12 @@
 
   <footer>
     <div class="wrap">
-      <div class="foot-brand"><b>2Hours</b><span>Your feeds sleep in. You don't.</span></div>
+      <div class="foot-brand"><img src="/assets/icon.png" alt="" /><div><b>2Hours</b><span>Your feeds sleep in. You don't.</span></div></div>
       <div class="links"><a href="/support">Support</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></div>
-      <small>© 2026 2Hours</small>
+      <small>© 2026 2Hours. Apple, the Apple logo and App Store are trademarks of Apple Inc.</small>
     </div>
   </footer>
+
+  <script src="/app.js" defer></script>
 </body>
 </html>
