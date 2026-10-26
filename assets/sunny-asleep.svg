@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 120 708 440">
+  <defs>
+    <linearGradient id="bsky" gradientUnits="userSpaceOnUse" x1="354" y1="0" x2="354" y2="360">
+      <stop offset="0" stop-color="#F66B03"/><stop offset=".55" stop-color="#F67614"/><stop offset="1" stop-color="#F78221"/>
+    </linearGradient>
+    <radialGradient id="bfa" gradientUnits="userSpaceOnUse" cx="354" cy="245" r="455" fx="354" fy="215"><stop offset="0" stop-color="#FFE042"/><stop offset="0.26" stop-color="#FFD32F"/><stop offset="0.55" stop-color="#FFC029"/><stop offset="0.82" stop-color="#FEA822"/><stop offset="1" stop-color="#FA921A"/></radialGradient>
+    <linearGradient id="bsc" gradientUnits="userSpaceOnUse" x1="0" y1="210" x2="0" y2="389">
+      <stop offset="0" stop-color="#FDFBF0"/><stop offset="1" stop-color="#F5F0DC"/>
+    </linearGradient>
+    <linearGradient id="bpu" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#484848"/><stop offset=".55" stop-color="#1D1D1D"/><stop offset="1" stop-color="#080808"/>
+    </linearGradient>
+    
+  </defs>
+  <g >
+    
+    
+    <path d="M2 474A352 326 0 0 1 706 474L706 1600L2 1600Z" fill="url(#bfa)"/><ellipse cx="168" cy="432" rx="50" ry="28" fill="#FF7B3A" fill-opacity=".22"/><ellipse cx="540" cy="432" rx="50" ry="28" fill="#FF7B3A" fill-opacity=".22"/>
+    <circle cx="552" cy="452" r="21" fill="#F7861A" fill-opacity=".5"/><circle cx="597" cy="428" r="16" fill="#F7861A" fill-opacity=".5"/><circle cx="594" cy="476" r="14" fill="#F7861A" fill-opacity=".5"/>
+    
+    
+    <g transform="translate(246.5 299.5) scale(1) translate(-246.5 -299.5)">
+      <clipPath id="be0"><circle cx="246.5" cy="299.5" r="89.3"/></clipPath>
+      <g clip-path="url(#be0)" opacity="0">
+        <circle cx="246.5" cy="299.5" r="89.3" fill="url(#bsc)"/>
+        <circle cx="246.5" cy="300.1" r="61.25" fill="url(#bpu)"/>
+        <circle cx="220.2" cy="290.90000000000003" r="20.8" fill="#FCF9ED"/>
+        <path d="M149.2 306Q246.5 368 343.8 306L343.8 317Q246.5 379 149.2 317Z" fill="#261C12" fill-opacity="0"/>
+        <path d="M149.2 306Q246.5 368 343.8 306L343.8 400.8L149.2 400.8Z" fill="url(#bfa)"/>
+        <path d="M149.2 306Q246.5 368 343.8 306L343.8 198.2L149.2 198.2Z" fill="url(#bfa)"/>
+      </g>
+      <g clip-path="url(#be0)">
+        <path d="M149.2 306Q246.5 368 343.8 306" fill="none" stroke="#22190B" stroke-width="12" stroke-linecap="round"/>
+      </g>
+    </g>
+    <g transform="translate(460.5 299.5) scale(1) translate(-460.5 -299.5)">
+      <clipPath id="be1"><circle cx="460.5" cy="299.5" r="89.3"/></clipPath>
+      <g clip-path="url(#be1)" opacity="0">
+        <circle cx="460.5" cy="299.5" r="89.3" fill="url(#bsc)"/>
+        <circle cx="460.5" cy="300.1" r="61.25" fill="url(#bpu)"/>
+        <circle cx="434.2" cy="290.90000000000003" r="20.8" fill="#FCF9ED"/>
+        <path d="M557.8 306Q460.5 368 363.2 306L363.2 317Q460.5 379 557.8 317Z" fill="#261C12" fill-opacity="0"/>
+        <path d="M557.8 306Q460.5 368 363.2 306L363.2 400.8L557.8 400.8Z" fill="url(#bfa)"/>
+        <path d="M557.8 306Q460.5 368 363.2 306L363.2 198.2L557.8 198.2Z" fill="url(#bfa)"/>
+      </g>
+      <g clip-path="url(#be1)">
+        <path d="M557.8 306Q460.5 368 363.2 306" fill="none" stroke="#22190B" stroke-width="12" stroke-linecap="round"/>
+      </g>
+    </g>
+    <path d="M262 446C324 478 384 478 446 446C384 478 324 478 262 446Z" fill="#22190B" stroke="#22190B" stroke-width="14" stroke-linejoin="round" stroke-linecap="round"/>
+  </g></svg>
