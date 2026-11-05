@@ -1,113 +1,107 @@
-// 2Hours site: header state, scroll reveals and the hero phone demo.
-(() => {
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+// Reveal on scroll: quick, once.
+const io = new IntersectionObserver(
+  (entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    }
+  },
+  { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+);
+document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 
-  // Header gets a frosted background once you scroll.
-  const top = document.getElementById('top');
-  const onScroll = () => top && top.classList.toggle('scrolled', scrollY > 8);
-  addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-
-  // Reveal on scroll (fast ease-out, staggered with --d).
-  const io = new IntersectionObserver(
-    (entries) => entries.forEach((e) => e.isIntersecting && (e.target.classList.add('in'), io.unobserve(e.target))),
-    { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+// Sunny: asleep with the mask down until you wake it. Pupils follow the pointer.
+const sunny = document.getElementById('sunny');
+const hint = document.getElementById('hint');
+if (sunny) {
+  let timer;
+  sunny.addEventListener('click', () => {
+    const waking = sunny.classList.contains('asleep');
+    sunny.classList.toggle('asleep', !waking);
+    sunny.classList.remove('waving');
+    hint.classList.add('gone');
+    if (waking) {
+      clearTimeout(timer);
+      void sunny.offsetWidth;
+      sunny.classList.add('waving');
+      timer = setTimeout(() => sunny.classList.remove('waving'), 1500);
+    }
+  });
+  const pupils = sunny.querySelector('.pupils');
+  addEventListener(
+    'pointermove',
+    (e) => {
+      const r = sunny.getBoundingClientRect();
+      const x = Math.max(-1, Math.min(1, (e.clientX - (r.left + r.width / 2)) / 420));
+      const y = Math.max(-1, Math.min(1, (e.clientY - (r.top + r.height / 2)) / 420));
+      pupils.style.transform = `translate(${x * 14}px, ${y * 10}px)`;
+    },
+    { passive: true },
   );
-  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+}
 
-  // ---------- Hero phone: one story, on a loop ----------
-  const phone = document.getElementById('phone');
-  if (!phone) return;
-  const b1 = document.getElementById('b1');
-  const b2 = document.getElementById('b2');
-  const tap = document.getElementById('tap');
-  const shield = document.getElementById('shield');
-  const bar = document.getElementById('bar');
-  const steps = document.getElementById('steps');
-  const faces = shield.querySelectorAll('.faces img');
-  const C = 352;
+// Tour tabs.
+const COPY = {
+  home: 'Your next lock, your streak and your garden, all at a glance.',
+  patrol: 'Beat the lock, and Sunny checks you stayed up.',
+  insights: 'Every morning you beat, and how fast you got up.',
+  sounds: 'Pick the sound your morning starts with.',
+};
+const tourImg = document.querySelector('#tour-phone img');
+const tabCopy = document.getElementById('tab-copy');
+document.querySelectorAll('.tabs button').forEach((b) => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.tabs button').forEach((x) => x.classList.toggle('on', x === b));
+    swap(tourImg, `/assets/screens/${b.dataset.tab}.webp`);
+    tabCopy.textContent = COPY[b.dataset.tab];
+  });
+});
 
-  const face = (i) => faces.forEach((f, j) => f.classList.toggle('on', j === i));
-  const setSteps = (n) => {
-    steps.textContent = n;
-    bar.style.strokeDashoffset = String(C * (1 - n / 300));
+// Mission tiles drive the phone.
+const missionImg = document.querySelector('#mission-phone img');
+document.querySelectorAll('#tiles .tile').forEach((t) => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('#tiles .tile').forEach((x) => x.classList.toggle('on', x === t));
+    swap(missionImg, `/assets/screens/${t.dataset.mission}.webp`);
+  });
+});
+
+function swap(img, src) {
+  img.classList.add('swap');
+  const next = new Image();
+  next.onload = () => {
+    img.src = src;
+    requestAnimationFrame(() => img.classList.remove('swap'));
   };
+  next.src = src;
+}
 
-  if (reduced) {
-    phone.classList.add('t7', 'locked');
-    shield.classList.add('show');
-    face(1);
-    setSteps(218);
-    return;
-  }
-
-  let timers = [];
-  let raf = 0;
-  const at = (ms, fn) => timers.push(setTimeout(fn, ms));
-  const ease = (p) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
-
-  const count = (dur) => {
-    const t0 = performance.now();
-    const tick = (now) => {
-      const p = Math.min(1, (now - t0) / dur);
-      const n = Math.round(ease(p) * 300);
-      setSteps(n);
-      if (n > 110) face(1);
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
+// The closing sun rises as you scroll to it.
+const sky = document.getElementById('sky');
+if (sky && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const sun = sky.querySelector('.rise');
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const r = sky.getBoundingClientRect();
+    const p = Math.max(0, Math.min(1, (innerHeight - r.top) / (innerHeight * 0.9)));
+    sun.style.transform = `translate(-50%, ${(1 - p) * 62}%)`;
   };
-
-  const reset = () => {
-    timers.forEach(clearTimeout);
-    timers = [];
-    cancelAnimationFrame(raf);
-    phone.classList.remove('t7', 'locked');
-    [b1, b2].forEach((b) => b.classList.remove('show'));
-    shield.classList.remove('show', 'hide', 'won');
-    tap.classList.remove('go');
-    face(0);
-    setSteps(0);
-  };
-
-  const play = () => {
-    reset();
-    at(700, () => phone.classList.add('t7'));
-    at(950, () => b1.classList.add('show'));
-    at(1250, () => phone.classList.add('locked'));
-    at(3000, () => b1.classList.remove('show'));
-    at(3300, () => {
-      void tap.offsetWidth; // restart the tap ripple
-      tap.classList.add('go');
-    });
-    at(3750, () => shield.classList.add('show'));
-    at(4500, () => count(2600));
-    at(7250, () => {
-      shield.classList.add('won');
-      face(2);
-    });
-    at(8300, () => {
-      shield.classList.add('hide');
-      shield.classList.remove('show');
-    });
-    at(8550, () => phone.classList.remove('locked'));
-    at(8900, () => b2.classList.add('show'));
-    at(11300, () => b2.classList.remove('show'));
-    at(12000, play);
-  };
-
-  // Only run while the phone is on screen.
-  let running = false;
-  new IntersectionObserver(
-    ([e]) => {
-      if (e.isIntersecting && !running) {
-        running = true;
-        play();
-      } else if (!e.isIntersecting && running) {
-        running = false;
-        reset();
+  addEventListener(
+    'scroll',
+    () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
       }
     },
-    { threshold: 0.25 },
-  ).observe(phone);
-})();
+    { passive: true },
+  );
+  update();
+}
+
+// Header goes solid after the hero.
+const header = document.querySelector('.top');
+addEventListener('scroll', () => header.classList.toggle('scrolled', scrollY > 24), { passive: true });
