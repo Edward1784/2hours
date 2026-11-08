@@ -47,7 +47,7 @@ const COPY = {
   home: 'Your next lock, your streak and your garden, all at a glance.',
   patrol: 'Beat the lock, and Sunny checks you stayed up.',
   insights: 'Every morning you beat, and how fast you got up.',
-  sounds: 'Pick the sound your morning starts with.',
+  garden: 'Beat your locks, earn sunshine, grow a little garden.',
 };
 const tourImg = document.querySelector('#tour-phone img');
 const tabCopy = document.getElementById('tab-copy');
